@@ -10,7 +10,7 @@ namespace Capstone.Classes
         // all files for this application should in this directory
         // you will likley need to create it on your computer
         private string filePath = @"C:\Catering\cateringsystem.csv";
-
+        
         // This class should contain any and all details of access to files
         public List<CateringItem> inventory = new List<CateringItem>();
         public List<CateringItem> GetItems()
@@ -23,7 +23,7 @@ namespace Capstone.Classes
                     string line = sr.ReadLine();
                     string[] split = line.Split('|');
 
-                    CateringItem item = new CateringItem(split[0], split[1], split[2], double.Parse(split[3]));
+                    CateringItem item = new CateringItem(split[0], split[1], split[2], decimal.Parse(split[3]));
 
                     inventory.Add(item);
                 }
