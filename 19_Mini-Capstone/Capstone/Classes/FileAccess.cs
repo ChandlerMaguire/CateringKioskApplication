@@ -28,6 +28,8 @@ namespace Capstone.Classes
                     inventory.Add(item);
                 }
             }
+            
+            inventory.Sort(delegate(CateringItem c1, CateringItem c2) { return c1.Code.CompareTo(c2.Code); });
             return inventory;
         }
     }

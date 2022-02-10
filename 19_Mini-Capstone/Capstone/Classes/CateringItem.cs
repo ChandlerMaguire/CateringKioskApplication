@@ -21,5 +21,7 @@ namespace Capstone.Classes
         public string Name { get; private set; }
         public double Price { get; private set; }
         public int Quantity { get; private set; } = 25;
+
+        
     }
 }

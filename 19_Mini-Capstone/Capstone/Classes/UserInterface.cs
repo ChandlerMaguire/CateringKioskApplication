@@ -51,11 +51,12 @@ namespace Capstone.Classes
             FileAccess file = new FileAccess();
             List<CateringItem> inventory = new List<CateringItem>();
             inventory = file.GetItems();
-            Console.WriteLine("Product Code Description Qty Price");
+            Console.WriteLine("Product Code".PadRight(15) + "Description".PadRight(24) + "Qty".PadRight(10) + "Price");
             foreach(CateringItem item in inventory)
             {
-                Console.WriteLine($"{item.Code} {item.Name} {item.Quantity} {item.Price.ToString("C")}");
+                Console.WriteLine($"{(item.Code).PadLeft(3).PadRight(14)} {item.Name.PadRight(23)} {item.Quantity.ToString("D").PadRight(9)} {item.Price.ToString("C")}");
             }
+            Console.WriteLine("");
         }
     }
 }
