@@ -9,6 +9,7 @@ namespace Capstone.Classes
         // This class should contain all the "work" for catering
 
         private List<CateringItem> inventory = new List<CateringItem>();
+        private List<CateringItem> receipt = new List<CateringItem>();
 
         public decimal AccountBalance { get; set; } = 0M;
 
@@ -43,6 +44,9 @@ namespace Capstone.Classes
                     {
                         AccountBalance -= item.Quantity * item.Price;
                         item.Quantity -= quantityInt;
+                        receipt.Add(item);
+                        receipt[receipt.Count - 1].Quantity = quantityInt;
+
                         return "Added to Cart";
                     }
                     else if(item.Code == productChoice)
@@ -69,6 +73,11 @@ namespace Capstone.Classes
         public List<CateringItem> AccessInventory()
         {
             return inventory;
+        }
+
+        public List<CateringItem> AccessReceipt()
+        {
+            return receipt;
         }
     }
 }

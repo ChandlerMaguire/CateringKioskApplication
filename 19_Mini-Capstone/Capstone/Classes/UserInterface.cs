@@ -33,9 +33,10 @@ namespace Capstone.Classes
                         break;
                     case "2":
                         DisplayPurchaseMenu();
-
                         break;
                     case "3":
+                        done = true;
+                        break;
                     default:
                         break;
                 }
@@ -126,6 +127,17 @@ namespace Capstone.Classes
                         break;
 
                     case "3":
+                        List<CateringItem> receipt = catering.AccessReceipt();
+                        decimal total = 0M;
+                        Console.WriteLine();
+                        foreach (CateringItem item in receipt)
+                        {
+                            Console.WriteLine($"{item.Quantity.ToString().PadLeft(3).PadRight(4)} {item.Type.PadRight(13)} {item.Name.PadRight(24)} {item.Price.ToString("C").PadRight(8)} {(item.Price * item.Quantity).ToString("C").PadRight(8)} {item.Message}");
+                            total += item.Price * item.Quantity;
+                        }
+                        Console.WriteLine();
+                        Console.WriteLine("Total: " + total);
+
                         run = false;
                         break;
                     default:
