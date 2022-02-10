@@ -18,13 +18,44 @@ namespace Capstone.Classes
 
         public void RunInterface()
         {
+            
+            
             bool done = false;
             while (!done)
             {
-                Console.WriteLine("This is the UserInterface");
-                Console.ReadLine();
+                DisplayMainMenu();
+
+                string userInput = Console.ReadLine();
+                switch (userInput)
+                {
+                    case "1":
+                        DisplayInventory();
+                        break;
+                    case "2":
+
+                    case "3":
+                    default:
+                        break;
+                }
             }
 
+        }
+        private void DisplayMainMenu()
+        {
+            Console.WriteLine("(1) Display Catering Items");
+            Console.WriteLine("(2) Order");
+            Console.WriteLine("(3) Quit");
+        }
+        private void DisplayInventory()
+        {
+            FileAccess file = new FileAccess();
+            List<CateringItem> inventory = new List<CateringItem>();
+            inventory = file.GetItems();
+            Console.WriteLine("Product Code Description Qty Price");
+            foreach(CateringItem item in inventory)
+            {
+                Console.WriteLine($"{item.Code} {item.Name} {item.Quantity} {item.Price.ToString("C")}");
+            }
         }
     }
 }
