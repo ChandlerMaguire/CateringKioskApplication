@@ -1,0 +1,4 @@
+﻿Build started...
+1>------ Build started: Project: CapstoneTests, Configuration: Debug Any CPU ------
+1>CapstoneTests -> C:\Users\Student\source\repos\pairs\c-sharp-mini-capstone-module-1-team-5\19_Mini-Capstone\CapstoneTests\bin\Debug\netcoreapp3.1\CapstoneTests.dll
+========== Build: 1 succeeded, 0 failed, 1 up-to-date, 0 skipped ==========

@@ -24,7 +24,6 @@ namespace Capstone.Classes
             while (!done)
             {
                 DisplayMainMenu();
-
                 string userInput = Console.ReadLine();
                 switch (userInput)
                 {
@@ -35,16 +34,19 @@ namespace Capstone.Classes
                         DisplayPurchaseMenu();
                         break;
                     case "3":
+                        FileAccess file = new FileAccess();
+                        file.LogTotalSales(catering.AccessReceipt());
                         done = true;
                         break;
                     default:
+                        Console.WriteLine("Please enter a valid input");
                         break;
                 }
             }
-
         }
         private void DisplayMainMenu()
         {
+            Console.WriteLine();
             Console.WriteLine("(1) Display Catering Items");
             Console.WriteLine("(2) Order");
             Console.WriteLine("(3) Quit");
@@ -81,7 +83,7 @@ namespace Capstone.Classes
                 switch (userInput)
                 {
                     case "1":
-                        Console.WriteLine("Please Enter Bills One By One (Max Deposit Amount: $500, Max Account Balance: $1500");
+                        Console.WriteLine("Please Enter Bills One By One (Max Deposit Amount: $500, Max Account Balance: $1500)");
                         Console.WriteLine("(D) Finish Deposit");
                         userInput = Console.ReadLine();
                         bool done = false;
@@ -137,7 +139,24 @@ namespace Capstone.Classes
                         }
                         Console.WriteLine();
                         Console.WriteLine("Total: " + total);
-
+                        Console.WriteLine();
+                        Dictionary<string, int> change = catering.MakeChange();
+                        if (change != null)
+                        {
+                            Console.Write("You received ");
+                            int count = change.Count;
+                            foreach (KeyValuePair<string, int> kvp in change)
+                            {
+                                Console.Write($"({kvp.Value}) {kvp.Key}");
+                                if (count > 1)
+                                {
+                                    Console.Write(", ");
+                                    count--;
+                                }
+                            }
+                            Console.Write(" in change.");
+                        }
+                        Console.WriteLine();
                         run = false;
                         break;
                     default:

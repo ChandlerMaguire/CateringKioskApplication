@@ -16,6 +16,8 @@ namespace Capstone.Classes
         public decimal AddMoney(string userInput)
         {
             decimal moneyToAdd = decimal.Parse(userInput);
+            FileAccess file = new FileAccess();
+            file.LogItems("ADD MONEY:", moneyToAdd, AccountBalance + moneyToAdd);
             return AccountBalance += moneyToAdd;
         }
 
@@ -40,21 +42,22 @@ namespace Capstone.Classes
             {
                 if (item.Code == productChoice && item.Quantity >= quantityInt)
                 {
-                    if (AccountBalance >= item.Quantity * item.Price)
+                    if (AccountBalance >= quantityInt * item.Price)
                     {
-                        AccountBalance -= item.Quantity * item.Price;
+                        AccountBalance -= quantityInt * item.Price;
                         item.Quantity -= quantityInt;
                         receipt.Add(item);
                         receipt[receipt.Count - 1].Quantity = quantityInt;
-
+                        FileAccess file = new FileAccess();
+                        file.LogItems($"{quantityInt} {item.Name} {item.Code}", quantityInt * item.Price, AccountBalance);
                         return "Added to Cart";
                     }
-                    else if(item.Code == productChoice)
+                    else if (item.Code == productChoice)
                     {
                         return "Insufficient Funds";
                     }
                 }
-                else if(item.Code == productChoice)
+                else if (item.Code == productChoice)
                 {
                     return "Insufficient Inventory";
                 }
@@ -78,6 +81,43 @@ namespace Capstone.Classes
         public List<CateringItem> AccessReceipt()
         {
             return receipt;
+        }
+        public Dictionary<string, int> MakeChange()
+        {
+            int cents = (int)(AccountBalance * 100);
+            if (AccountBalance == 0)
+            {
+                return null;
+            }
+
+            Dictionary<string, int> change = new Dictionary<string, int>();
+            change["Fifties"] = cents / 5000;
+            cents -= (5000 * (cents / 5000));
+            change["Twenties"] = cents / 2000;
+            cents -= (2000 * (cents / 2000));
+            change["Tens"] = cents / 1000;
+            cents -= (1000 * (cents / 1000));
+            change["Fives"] = cents / 500;
+            cents -= (500 * (cents / 500));
+            change["Ones"] = cents / 100;
+            cents -= (100 * (cents / 100));
+            change["Quarters"] = cents / 25;
+            cents -= (25 * (cents / 25));
+            change["Dimes"] = cents / 10;
+            cents -= (10 * (cents / 10));
+            change["Nickles"] = cents /5;
+            cents -= (5 * (cents / 5));
+            foreach(KeyValuePair<string, int> kvp in change)
+            {
+                if(kvp.Value == 0)
+                {
+                    change.Remove(kvp.Key);
+                }
+            }
+            FileAccess file = new FileAccess();
+            file.LogItems("GIVE CHANGE:", AccountBalance, 0M);
+            return change;
+
         }
     }
 }
